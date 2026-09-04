@@ -1,10 +1,7 @@
 import { runAdminCommand } from "./admin.js";
-import { runCreditsCommand } from "./credits.js";
 import { runFakequoteCommand, type FakequoteResult } from "./fakequote.js";
-import { buildHelpPages } from "./help.js";
 import { runHostSettingsCommand } from "./hostSettings.js";
 import { runSettingsCommand } from "./settings.js";
-import { resolveLocale } from "../config/settings.js";
 import { resolveHostId } from "../misskey/client.js";
 import { parseOptions, type ParsedInvocation } from "../quoteOptions.js";
 
@@ -15,19 +12,11 @@ export interface TextCommandCaller {
 
 export type TextCommandResult =
   | { kind: "text"; text: string }
-  | { kind: "pages"; pages: string[] }
   | { kind: "fakequote"; result: FakequoteResult }
   /** No recognized command keyword — the whole text is quote options for the default "quote the replied note" flow. */
   | { kind: "quote"; invocation: ParsedInvocation };
 
-const KEYWORDS = new Set([
-  "settings",
-  "host-settings",
-  "admin",
-  "help",
-  "credits",
-  "fakequote",
-]);
+const KEYWORDS = new Set(["settings", "host-settings", "admin", "fakequote"]);
 
 /**
  * Dispatches the text after a mention (with the bot's own `@name` token
@@ -37,6 +26,10 @@ const KEYWORDS = new Set([
  * so this — plain keywords inside the mention text — is this bot's
  * equivalent of OpenMiQ's Discord slash-command dispatch
  * (`handlers/interactionCreate.ts` there).
+ *
+ * `help`/`credits` aren't text commands here — see `pinnedNotes.ts`: the
+ * bot posts and pins one standing copy of each per locale at startup
+ * instead of answering each request fresh.
  */
 export async function dispatchTextCommand(
   text: string,
@@ -83,20 +76,6 @@ export async function dispatchTextCommand(
           callerHostId,
         }),
       };
-    case "help": {
-      const locale = resolveLocale({
-        userId: caller.id,
-        hostId: callerHostId,
-      });
-      return { kind: "pages", pages: buildHelpPages(locale) };
-    }
-    case "credits": {
-      const locale = resolveLocale({
-        userId: caller.id,
-        hostId: callerHostId,
-      });
-      return { kind: "text", text: runCreditsCommand(locale) };
-    }
     case "fakequote":
       return {
         kind: "fakequote",

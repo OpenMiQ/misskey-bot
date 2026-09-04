@@ -96,6 +96,11 @@ export async function unreact(noteId: string): Promise<void> {
   await api.request("notes/reactions/delete", { noteId });
 }
 
+/** Pins one of the bot's own notes to its profile — see `pinnedNotes.ts`. */
+export async function pin(noteId: string): Promise<void> {
+  await api.request("i/pin", { noteId });
+}
+
 /**
  * Uploads a PNG to the bot's drive and returns its file id, for
  * `notes/create`'s `fileIds`. Node ≥18's global `File`/`FormData`/`fetch`

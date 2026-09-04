@@ -3,12 +3,18 @@ import { onMention } from "./handlers/mention.js";
 import { onReaction } from "./handlers/reaction.js";
 import { loadSelf } from "./misskey/client.js";
 import { connectStream } from "./misskey/stream.js";
+import { ensurePinnedNotes, loadPinnedNotesStore } from "./pinnedNotes.js";
 
 export async function main(): Promise<void> {
   loadSettingsStores();
+  loadPinnedNotesStore();
 
   const self = await loadSelf();
   console.log(`Logged in as @${self.username}`);
+
+  void ensurePinnedNotes().catch((error) =>
+    console.error("Failed to ensure pinned help/credits notes:", error),
+  );
 
   const stream = connectStream({
     onMention: (note) => {

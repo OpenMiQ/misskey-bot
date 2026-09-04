@@ -12,26 +12,33 @@ const STRINGS = {
     ja: "ノートにリプライした状態でこのBotをメンションすると、引用画像になります。",
   },
   commandsTitle: { en: "🤖 Text commands", ja: "🤖 テキストコマンド" },
+  // Every command's own syntax is backtick-quoted (MFM inline code) rather
+  // than plain quotes — besides reading as code, it keeps a placeholder
+  // like `@user` from being parsed as a real mention token once this posts
+  // as an actual note (mfm-js doesn't extract mentions out of inline code).
   commands: {
-    en: '"settings view|set …|reset" — your own defaults\n"host-settings view|set …|reset" — this instance\'s defaults (bot admins only)\n"fakequote @user: message -- options" — make up a quote in someone\'s name\n"admin view|set …|reset" — bot-wide defaults (bot admins only)\n"help" — this help\n"credits" — who made this bot and what it\'s built on',
-    ja: '"settings view|set …|reset" — あなたのデフォルト設定\n"host-settings view|set …|reset" — このインスタンスのデフォルト設定 (Bot管理者のみ)\n"fakequote @user: message -- options" — 誰かの名前で架空の引用を作る\n"admin view|set …|reset" — Bot全体のデフォルト設定 (Bot管理者のみ)\n"help" — このヘルプ\n"credits" — このBotの作者と使用ライブラリ',
+    en: "`settings view|set …|reset` — your own defaults\n`host-settings view|set …|reset` — this instance's defaults (bot admins only)\n`fakequote @user: message -- options` — make up a quote in someone's name\n`admin view|set …|reset` — bot-wide defaults (bot admins only)",
+    ja: "`settings view|set …|reset` — あなたのデフォルト設定\n`host-settings view|set …|reset` — このインスタンスのデフォルト設定 (Bot管理者のみ)\n`fakequote @user: message -- options` — 誰かの名前で架空の引用を作る\n`admin view|set …|reset` — Bot全体のデフォルト設定 (Bot管理者のみ)",
   },
   optionsTitle: { en: "⚙️ Mention options", ja: "⚙️ メンションのオプション" },
+  // {{bot}} is the bot's own real, working mention (e.g. "@miq") —
+  // deliberately *not* inside backticks, unlike the placeholders above:
+  // this one is meant to actually work if pressed/copied.
   optionsIntro: {
-    en: 'Combine freely after the mention, e.g. "@MiQ color new font=pop". Every toggle has a one-letter shortcut.',
-    ja: 'メンションの後ろに自由に組み合わせられます。例: "@MiQ color new font=pop"。トグルには1文字の短縮形があります。',
+    en: "Combine freely after the mention, e.g. {{bot}} `color new font=pop`. Every toggle has a one-letter shortcut.",
+    ja: "メンションの後ろに自由に組み合わせられます。例: {{bot}} `color new font=pop`。トグルには1文字の短縮形があります。",
   },
   options: {
-    en: '"color"(c)/"mono"(m) — color/grayscale avatar\n"bold"(b)/"regular"(r) — bold/regular text\n"light"(l)/"dark"(d) — light/dark theme\n"flip"(f)/"unflip"(u) — avatar side (side layout only)\n"new"(n)/"side"(s) — layout\n"chain"/"unchain" — stack with the note it\'s replying to (wins over "new")\n"font=<alias>" — pick a font, see page 2\n"theme=<alias>" — background color, "theme=default" clears it, see page 2',
-    ja: '"color"(c)/"mono"(m) — カラー/モノクロのアバター\n"bold"(b)/"regular"(r) — 太字/通常の引用文\n"light"(l)/"dark"(d) — ライト/ダークテーマ\n"flip"(f)/"unflip"(u) — アバターの位置 (横画像のみ)\n"new"(n)/"side"(s) — レイアウト\n"chain"/"unchain" — 返信元があれば連結表示 ("new" より優先)\n"font=<alias>" — フォント指定。2ページ目参照\n"theme=<alias>" — 背景カラー指定。"theme=default" で解除。2ページ目参照',
+    en: "`color`(c)/`mono`(m) — color/grayscale avatar\n`bold`(b)/`regular`(r) — bold/regular text\n`light`(l)/`dark`(d) — light/dark theme\n`flip`(f)/`unflip`(u) — avatar side (side layout only)\n`new`(n)/`side`(s) — layout\n`chain`/`unchain` — stack with the note it's replying to (wins over `new`)\n`font=<alias>` — pick a font, see page 2\n`theme=<alias>` — background color, `theme=default` clears it, see page 2",
+    ja: "`color`(c)/`mono`(m) — カラー/モノクロのアバター\n`bold`(b)/`regular`(r) — 太字/通常の引用文\n`light`(l)/`dark`(d) — ライト/ダークテーマ\n`flip`(f)/`unflip`(u) — アバターの位置 (横画像のみ)\n`new`(n)/`side`(s) — レイアウト\n`chain`/`unchain` — 返信元があれば連結表示 (`new` より優先)\n`font=<alias>` — フォント指定。2ページ目参照\n`theme=<alias>` — 背景カラー指定。`theme=default` で解除。2ページ目参照",
   },
   fontsTitle: {
-    en: '🔤 Fonts — "font=<alias>"',
-    ja: '🔤 フォント — "font=<エイリアス>"',
+    en: "🔤 Fonts — `font=<alias>`",
+    ja: "🔤 フォント — `font=<エイリアス>`",
   },
   colorThemesTitle: {
-    en: '🎨 Color themes — "theme=<alias>"',
-    ja: '🎨 カラーテーマ — "theme=<エイリアス>"',
+    en: "🎨 Color themes — `theme=<alias>`",
+    ja: "🎨 カラーテーマ — `theme=<エイリアス>`",
   },
   customColorThemesTitle: {
     en: "🎨 Custom color themes",
@@ -39,23 +46,29 @@ const STRINGS = {
   },
   defaultsTitle: { en: "💾 Saving defaults", ja: "💾 デフォルトの保存" },
   defaults: {
-    en: '"settings set …" saves your own defaults. The matching "reset" clears them.',
-    ja: '"settings set …" で自分のデフォルトを保存できます。対応する "reset" で解除できます。',
+    en: "`settings set …` saves your own defaults. The matching `reset` clears them.",
+    ja: "`settings set …` で自分のデフォルトを保存できます。対応する `reset` で解除できます。",
   },
   fakequoteTitle: { en: "🎭 fakequote", ja: "🎭 fakequote" },
   fakequote: {
-    en: '"fakequote @user: message -- options" makes up a quote in someone else\'s name. Don\'t want it used on you? Block it with "settings set block-fakequote".',
-    ja: '"fakequote @user: message -- options" は指定したユーザーの名前で引用文をでっち上げます。使われたくない場合は "settings set block-fakequote" でブロックできます。',
+    en: "`fakequote @user: message -- options` makes up a quote in someone else's name. Don't want it used on you? Block it with `settings set block-fakequote`.",
+    ja: "`fakequote @user: message -- options` は指定したユーザーの名前で引用文をでっち上げます。使われたくない場合は `settings set block-fakequote` でブロックできます。",
   },
 } satisfies Record<string, Translations>;
 
-/** The `help` text command's reply, as a short chain of note texts (see `handlers/mention.ts`). */
-export function buildHelpPages(locale: string): string[] {
+/**
+ * The pinned help note's content (see `pinnedNotes.ts`), as one note per
+ * "page" — posted as a reply chain when it doesn't fit in one note.
+ * `botMention` is the bot's own real `@name` (or `@name@host`), so the
+ * usage example actually works if pressed/copied rather than showing a
+ * stale hardcoded placeholder.
+ */
+export function buildHelpPages(locale: string, botMention: string): string[] {
   const page1 = [
     `**${t(STRINGS.title, locale)}**`,
     `**${t(STRINGS.basicsTitle, locale)}**\n${t(STRINGS.basics, locale)}`,
     `**${t(STRINGS.commandsTitle, locale)}**\n${t(STRINGS.commands, locale)}`,
-    `**${t(STRINGS.optionsTitle, locale)}**\n${t(STRINGS.optionsIntro, locale)}\n${t(STRINGS.options, locale)}`,
+    `**${t(STRINGS.optionsTitle, locale)}**\n${t(STRINGS.optionsIntro, locale, { bot: botMention })}\n${t(STRINGS.options, locale)}`,
   ].join("\n\n");
 
   const page2 = [

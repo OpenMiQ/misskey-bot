@@ -51,15 +51,6 @@ export async function onMention(note: entities.Note): Promise<void> {
     return;
   }
 
-  if (result.kind === "pages") {
-    let replyId = note.id;
-    for (const page of result.pages) {
-      const posted = await createNote({ text: page, replyId });
-      replyId = posted.id;
-    }
-    return;
-  }
-
   if (result.kind === "fakequote") {
     const fq = result.result;
     if (fq.kind === "error") {

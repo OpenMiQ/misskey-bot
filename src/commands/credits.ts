@@ -27,7 +27,7 @@ const STRINGS = {
   },
 } satisfies Record<string, Translations>;
 
-/** The credits text, shared by the `credits` command and `help`'s last section. */
+/** The credits text, shared by the pinned credits note and `help`'s last section — see `pinnedNotes.ts`. */
 export function creditsText(locale: string): string {
   return [
     `**${t(STRINGS.title, locale)}**`,
@@ -39,8 +39,4 @@ export function creditsText(locale: string): string {
     `**${t(STRINGS.inspirationTitle, locale)}**`,
     t(STRINGS.inspiration, locale),
   ].join("\n\n");
-}
-
-export function runCreditsCommand(locale: string): string {
-  return creditsText(locale);
 }

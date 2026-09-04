@@ -1,13 +1,13 @@
 import { resolveLocale } from "../config/settings.js";
-import { t, type Translations } from "../i18n/index.js";
+import { normalizeLocale, t, type Translations } from "../i18n/index.js";
 import {
   createNote,
   deleteNote,
   getSelf,
   resolveHostId,
 } from "../misskey/client.js";
-import { buildHelpPages } from "../commands/help.js";
 import { HELP_REACTION_EMOJI, takePendingHelp } from "../pendingHelp.js";
+import { pinnedNoteUrl } from "../pinnedNotes.js";
 import { QUOTE_MESSAGES } from "../quoteMessages.js";
 import { DELETE_REACTION_EMOJI } from "../reactions.js";
 import type { ReactionNotification } from "../misskey/stream.js";
@@ -31,6 +31,14 @@ const STRINGS = {
   deleteNotAllowed: {
     en: "Only the person who made this quote, or the person it's about, can delete it.",
     ja: "この引用を削除できるのは、作成した本人か、引用対象になった本人だけです。",
+  },
+  helpPinned: {
+    en: "Help & credits are pinned to my profile: {{url}}",
+    ja: "ヘルプとクレジットはプロフィールにピン留めしています: {{url}}",
+  },
+  helpNotReady: {
+    en: "Help isn't ready yet — please try again in a moment.",
+    ja: "ヘルプがまだ準備できていません。少し待ってから再度お試しください。",
   },
 } satisfies Record<string, Translations>;
 
@@ -58,17 +66,25 @@ export async function onReaction(
   }
 }
 
+/**
+ * Points a ❓ press at the pinned help note instead of reposting its full
+ * content — the help text now lives permanently pinned on the bot's own
+ * profile (see `pinnedNotes.ts`), so there's nothing left to build here.
+ */
 async function handleHelpReaction(
   notification: ReactionNotification,
 ): Promise<void> {
   const pending = takePendingHelp(notification.note.id);
   if (!pending || pending.requesterId !== notification.user.id) return;
 
-  let replyId = notification.note.id;
-  for (const page of buildHelpPages(pending.locale)) {
-    const posted = await createNote({ text: page, replyId });
-    replyId = posted.id;
-  }
+  const locale = normalizeLocale(pending.locale);
+  const url = pinnedNoteUrl("help");
+  await createNote({
+    text: url
+      ? t(STRINGS.helpPinned, locale, { url })
+      : t(STRINGS.helpNotReady, locale),
+    replyId: notification.note.id,
+  }).catch(() => {});
 }
 
 async function handleDeleteReaction(

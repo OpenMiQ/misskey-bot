@@ -58,24 +58,28 @@ Every toggle has an opposite (and a one-letter shortcut, except `font=`/`theme=`
 
 `chain` stacks the quoted note with the note _it's_ replying to into one image (top and bottom, via makeitaquote's `MiQChain`). `chain` and `new` can't combine — `chain` wins, forcing the `side` layout for as long as it's on.
 
-Mentioning the bot without replying to anything reacts with ❓ instead of sending (and then deleting) a usage message — press that reaction within a minute and it replies with the `help` text.
+Mentioning the bot without replying to anything reacts with ❓ instead of sending (and then deleting) a usage message — press that reaction within a minute and it replies with a link to the pinned help note (see [Help & credits](#help--credits) below).
 
-Fonts are chosen by short alias (`sans`, `mplus`, `dela`, `dot`, `pop`, `rampart`, `reggae`, `rocknroll`, `serif`, `yuji`, `yusei`, `inconsolata`, `exo2`, `bruno`, `poltawski`, `vina`, `script`, `castoro` — `mplus`/M PLUS Rounded 1c is the default), and `theme=` picks one of makeitaquote's 21 official + 18 original named background colors. Run `help` for the full lists.
+Fonts are chosen by short alias (`sans`, `mplus`, `dela`, `dot`, `pop`, `rampart`, `reggae`, `rocknroll`, `serif`, `yuji`, `yusei`, `inconsolata`, `exo2`, `bruno`, `poltawski`, `vina`, `script`, `castoro` — `mplus`/M PLUS Rounded 1c is the default), and `theme=` picks one of makeitaquote's 21 official + 18 original named background colors. See the pinned help note for the full lists.
 
 A posted quote gets a 🗑️ reaction from the bot as a hint: react with it yourself (as the generator or the quoted note's author) to delete the note.
 
 ### Text commands
 
-Misskey has no slash commands, so these are plain keywords inside a mention — `@miq settings view`, `@miq help`, etc.:
+Misskey has no slash commands, so these are plain keywords inside a mention — `@miq settings view`, etc.:
 
 - `settings view|set <tokens>|reset` — your own default quote options and language, applied whenever you don't specify them after a mention. `set` takes the same tokens as after a mention, plus `lang=xx`, plus `block-fakequote`/`unblock-fakequote` to control whether others can put words in your mouth with `fakequote`, plus `fake-label`/`no-fake-label` to control the "(fake)" marker on your own `fakequote` renders (shown by default).
 - `host-settings view|set <tokens>|reset` — defaults for your own host (home instance). **Bot-admin only** (`ADMIN_IDS`) — Misskey's public API has no way for the bot to check whether an arbitrary caller moderates a given instance, only whether it's the bot's own account (`i`), so this can't be opened up the way OpenMiQ's Discord `/server-settings` is to anyone with "Manage Server". Also has `delete-reaction`/`no-delete-reaction` to show/hide the delete-reaction hint instance-wide.
 - `admin view|set <tokens>|reset` — the bot's own fallback defaults, bot admins only (`ADMIN_IDS`). Same extra tokens as `host-settings`.
-- `help` — usage help in your resolved language, as a short reply chain (two notes).
-- `credits` — who made this bot and what it's built on.
 - `fakequote @user: message text -- options` — makes a quote image in someone else's name and avatar, with fabricated text. `--` separates the free-text message from the trailing option tokens (same syntax as after a mention). Its username line reads "(fake) @user" instead of the usual "@user" unless disabled — the target author can block being used at all with `settings set block-fakequote`, and bot admins can disable it everywhere with `admin set block-fakequote`.
 
 Defaults are resolved as: options typed after a mention > your settings > this host's settings > the bot's own defaults > built-in fallback. The same order picks which language a reply is shown in.
+
+### Help & credits
+
+There's no `help`/`credits` text command. Instead, at startup the bot posts (once) and pins one help note and one credits note **per supported locale** — so `pnpm run dev`/`pnpm start`'s first run against a fresh account pins 4 notes (help-en, help-ja, credits-en, credits-ja). It skips any that still exist, so restarting doesn't repost/re-pin them; if you edit the help/credits text in code, the already-pinned note doesn't update on its own — delete the stale note (or its entry in `data/pinnedNotes.json`) to have it regenerated.
+
+The help note is long enough to need two notes — it posts as a reply chain (a small thread), with only the root note actually pinned.
 
 ## Required
 
@@ -126,7 +130,7 @@ All of these go in `.env` (see `.env.example`):
 | `MISSKEY_TOKEN` | The bot account's access token (see [Required](#required) for scopes) |
 | `ADMIN_IDS` | Comma-separated Misskey user IDs allowed to run `admin`/`host-settings` |
 | `DEFAULT_LOCALE` | Locale used when nothing else sets one (default `en`) |
-| `DATA_DIR` | Where per-user/host/bot settings are stored as JSON (default `./data`) |
+| `DATA_DIR` | Where per-user/host/bot settings and the pinned help/credits note record are stored as JSON (default `./data`) |
 | `SAVE_IMAGES_DIR` | If set, also save a copy of every generated image here (disabled by default) |
 | `LOGO_PATH` | Path to a logo image drawn as the quote watermark in place of the bot's own handle (unset by default) |
 | `PM2_APP_NAME` | Process name pm2 registers the bot under (default `openmiq-misskey`) |
@@ -146,7 +150,7 @@ pnpm run lint  # eslint
 - No post-quote button/select-menu equivalent — re-pick options by mentioning again.
 - The delete reaction only works for quotes posted since the last restart (in-memory state, same caveat OpenMiQ's Discord buttons have).
 - `host-settings` only ever targets the caller's own host, not an arbitrary remote one.
-- Reaction matching compares the reaction string directly against `❓`/`🗑️` — an instance-specific custom-emoji override of those glyphs won't match.
+- Reaction matching compares the (variation-selector-stripped) reaction string against `❓`/`🗑` — an instance-specific custom-emoji override of those glyphs won't match.
 
 ## Author
 
