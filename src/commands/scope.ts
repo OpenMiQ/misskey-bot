@@ -66,25 +66,30 @@ const STRINGS = {
     en: "Only bot admins can do this.",
     ja: "この操作はBot管理者のみ実行できます。",
   },
+  // Interpolated placeholders below are backtick-quoted (MFM inline code),
+  // not just quote marks — they echo back attacker-controlled input (a
+  // typed lang=/font=/theme= token, or subcommand word), and mfm-js
+  // doesn't extract mentions out of inline code, so a token crafted as
+  // e.g. "font=@someone" can't turn a reply into an unwanted mention.
   errorInvalidLocale: {
-    en: 'Unknown language "{{locale}}". Available: {{locales}}.',
-    ja: '不明な言語です: "{{locale}}"。利用可能: {{locales}}',
+    en: "Unknown language `{{locale}}`. Available: {{locales}}.",
+    ja: "不明な言語です: `{{locale}}`。利用可能: {{locales}}",
   },
   errorInvalidFont: {
-    en: 'Unknown font "{{token}}". Available: {{aliases}}.',
-    ja: '不明なフォントです: "{{token}}"。利用可能: {{aliases}}',
+    en: "Unknown font `{{token}}`. Available: {{aliases}}.",
+    ja: "不明なフォントです: `{{token}}`。利用可能: {{aliases}}",
   },
   errorInvalidTheme: {
-    en: 'Unknown color theme "{{token}}". Available: {{themes}}.',
-    ja: '不明なカラーテーマです: "{{token}}"。利用可能: {{themes}}',
+    en: "Unknown color theme `{{token}}`. Available: {{themes}}.",
+    ja: "不明なカラーテーマです: `{{token}}`。利用可能: {{themes}}",
   },
   errorNoOptions: {
-    en: 'Give at least one option to set, e.g. "settings set color lang=ja".',
-    ja: '少なくとも1つオプションを指定してください。例: "settings set color lang=ja"',
+    en: "Give at least one option to set, e.g. `settings set color lang=ja`.",
+    ja: "少なくとも1つオプションを指定してください。例: `settings set color lang=ja`",
   },
   errorUnknownSubcommand: {
-    en: 'Unknown subcommand "{{sub}}". Use "view", "set …" or "reset".',
-    ja: '不明なサブコマンドです: "{{sub}}"。"view"、"set …"、"reset" のいずれかを指定してください。',
+    en: "Unknown subcommand `{{sub}}`. Use `view`, `set …` or `reset`.",
+    ja: "不明なサブコマンドです: `{{sub}}`。`view`、`set …`、`reset` のいずれかを指定してください。",
   },
 } satisfies Record<string, Translations>;
 

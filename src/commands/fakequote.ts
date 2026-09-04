@@ -17,13 +17,19 @@ import { QUOTE_MESSAGES } from "../quoteMessages.js";
 import { renderQuote } from "../render.js";
 
 const STRINGS = {
+  // Backtick-quoted (MFM inline code), not just for readability — mfm-js
+  // doesn't extract mentions out of inline code, so the `@user` placeholder
+  // here can't be parsed as a real mention once this posts as a reply.
   usage: {
-    en: 'Usage: "fakequote @user: message text -- options" (options optional).',
-    ja: '使い方: "fakequote @user: message text -- options" (optionsは省略可)',
+    en: "Usage: `fakequote @user: message text -- options` (options optional).",
+    ja: "使い方: `fakequote @user: message text -- options` (optionsは省略可)",
   },
+  // {{token}} is backtick-quoted, not just quote marks — it's the
+  // caller-typed @user[@host] itself, and mfm-js doesn't extract mentions
+  // out of inline code, so echoing it back can't ping that account.
   userNotFound: {
-    en: 'Couldn\'t find the user "{{token}}".',
-    ja: '"{{token}}" というユーザーが見つかりませんでした。',
+    en: "Couldn't find the user `{{token}}`.",
+    ja: "`{{token}}` というユーザーが見つかりませんでした。",
   },
   blockedByBot: {
     en: "The bot admins have disabled fakequote.",
