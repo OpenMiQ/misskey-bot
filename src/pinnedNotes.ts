@@ -2,9 +2,18 @@ import { buildHelpPages } from "./commands/help.js";
 import { creditsText } from "./commands/credits.js";
 import { JsonStore } from "./config/store.js";
 import { DEFAULT_LOCALE, MISSKEY_URL } from "./config/env.js";
-import { createNote, getSelf, pin, showNote } from "./misskey/client.js";
+import {
+  createNote,
+  deleteNote,
+  getSelf,
+  pin,
+  showNote,
+  unpin,
+} from "./misskey/client.js";
 
-type PinnedKind = "help" | "credits";
+const KINDS = ["help", "credits"] as const;
+
+type PinnedKind = (typeof KINDS)[number];
 
 interface PinnedNoteRecord {
   /** Every note in the kind's reply chain, root first — all of them get pinned. */
@@ -55,6 +64,32 @@ export async function ensurePinnedNotes(): Promise<void> {
 
   await ensurePinned("credits", [creditsText(locale)]);
   await ensurePinned("help", buildHelpPages(locale, botMention));
+}
+
+/**
+ * Deletes every currently-pinned help/credits note and posts fresh ones in
+ * their place — for after editing the help/credits content in code, since
+ * `ensurePinnedNotes()` on its own only fills in what's missing, it never
+ * refreshes a note that's still there. Unpins before deleting (Misskey
+ * doesn't auto-unpin a note that gets deleted), and clears each kind's
+ * `data/pinnedNotes.json` record before calling `ensurePinnedNotes()` so
+ * it treats both kinds as never having been posted.
+ */
+export async function repostPinnedNotes(): Promise<void> {
+  for (const kind of KINDS) {
+    const existing = store.get(kind)?.noteIds ?? [];
+    for (const noteId of existing) {
+      await unpin(noteId).catch(() => {});
+      await deleteNote(noteId).catch((error: unknown) =>
+        console.error(
+          `Failed to delete a stale ${kind} note (${noteId}):`,
+          error,
+        ),
+      );
+    }
+    await store.delete(kind);
+  }
+  await ensurePinnedNotes();
 }
 
 async function ensurePinned(

@@ -17,8 +17,8 @@ const STRINGS = {
   // like `@user` from being parsed as a real mention token once this posts
   // as an actual note (mfm-js doesn't extract mentions out of inline code).
   commands: {
-    en: "`settings view|set …|reset` — your own defaults\n`host-settings view|set …|reset` — this instance's defaults (bot admins only)\n`fakequote <options> @user message` — make up a quote in someone's name\n`admin view|set …|reset` — bot-wide defaults (bot admins only)",
-    ja: "`settings view|set …|reset` — あなたのデフォルト設定\n`host-settings view|set …|reset` — このインスタンスのデフォルト設定 (Bot管理者のみ)\n`fakequote <options> @user message` — 誰かの名前で架空の引用を作る\n`admin view|set …|reset` — Bot全体のデフォルト設定 (Bot管理者のみ)",
+    en: "`settings view|set …|reset` — your own defaults\n`host-settings view|set …|reset` — this instance's defaults (bot admins only)\n`fakequote <options> @user message` — make up a quote in someone's name\n`admin view|set …|reset` — bot-wide defaults (bot admins only)\n`admin repost-pins` — delete and repost the pinned help/credits notes (bot admins only)",
+    ja: "`settings view|set …|reset` — あなたのデフォルト設定\n`host-settings view|set …|reset` — このインスタンスのデフォルト設定 (Bot管理者のみ)\n`fakequote <options> @user message` — 誰かの名前で架空の引用を作る\n`admin view|set …|reset` — Bot全体のデフォルト設定 (Bot管理者のみ)\n`admin repost-pins` — ピン留めされたヘルプ/クレジットノートを削除して再投稿 (Bot管理者のみ)",
   },
   optionsTitle: { en: "⚙️ Mention options", ja: "⚙️ メンションのオプション" },
   // {{bot}} is the bot's own real, working mention (e.g. "@miq") —

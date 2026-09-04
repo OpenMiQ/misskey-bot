@@ -101,6 +101,11 @@ export async function pin(noteId: string): Promise<void> {
   await api.request("i/pin", { noteId });
 }
 
+/** Unpins one of the bot's own notes from its profile — see `pinnedNotes.ts`. */
+export async function unpin(noteId: string): Promise<void> {
+  await api.request("i/unpin", { noteId });
+}
+
 /**
  * Uploads a PNG to the bot's drive and returns its file id, for
  * `notes/create`'s `fileIds`. Node ≥18's global `File`/`FormData`/`fetch`

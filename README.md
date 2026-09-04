@@ -77,7 +77,7 @@ Defaults are resolved as: options typed after a mention > your settings > this h
 
 ### Help & credits
 
-There's no `help`/`credits` text command. Instead, at startup the bot posts (once) and pins a help note and a credits note in `DEFAULT_LOCALE` — not every `SUPPORTED_LOCALES` entry, since Misskey caps how many notes an account can pin (5 by default) and help alone needs two of them (its font/color-theme lists don't fit in one note). It skips any that still exist, so restarting doesn't repost/re-pin them; if you edit the help/credits text in code, the already-pinned notes don't update on their own — delete the stale ones (or the `help`/`credits` entry in `data/pinnedNotes.json`) to have them regenerated.
+There's no `help`/`credits` text command. Instead, at startup the bot posts (once) and pins a help note and a credits note in `DEFAULT_LOCALE` — not every `SUPPORTED_LOCALES` entry, since Misskey caps how many notes an account can pin (5 by default) and help alone needs two of them (its font/color-theme lists don't fit in one note). It skips any that still exist, so restarting doesn't repost/re-pin them; if you edit the help/credits text in code, the already-pinned notes don't update on their own — mention the bot with `admin repost-pins` (bot admins only) to delete the old ones and post fresh ones in their place.
 
 All 3 notes end up pinned — help's two pages (posted as a reply chain/thread) plus credits — reading top-to-bottom on the profile as help page 1, help page 2, credits.
 
