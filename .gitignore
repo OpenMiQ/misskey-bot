@@ -1,0 +1,9 @@
+.makeitaquote/
+.private/
+dist/
+node_modules/
+coverage/
+data/
+.env
+.env.*
+!.env.example
