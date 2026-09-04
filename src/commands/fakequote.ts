@@ -21,8 +21,8 @@ const STRINGS = {
   // doesn't extract mentions out of inline code, so the `@user` placeholder
   // here can't be parsed as a real mention once this posts as a reply.
   usage: {
-    en: "Usage: `fakequote @user: message text -- options` (options optional).",
-    ja: "使い方: `fakequote @user: message text -- options` (optionsは省略可)",
+    en: "Usage: `fakequote <options> @user message text` (options optional).",
+    ja: "使い方: `fakequote <options> @user message text` (optionsは省略可)",
   },
   // {{token}} is backtick-quoted, not just quote marks — it's the
   // caller-typed @user[@host] itself, and mfm-js doesn't extract mentions
@@ -51,8 +51,45 @@ const BLOCK_MESSAGE: Record<"bot" | "host" | "user", Translations> = {
   user: STRINGS.blockedByUser,
 };
 
-/** `@user[@host]: message text -- options` — parses the `fakequote` command's argument string. */
-const FAKEQUOTE_RE = /^@([a-zA-Z0-9_]+)(?:@([a-zA-Z0-9.-]+))?:?\s+([\s\S]+)$/;
+/**
+ * Finds the `@user`/`@user@host` target inside `fakequote <options> @user
+ * message text` — bounded by whitespace/string edges so it can't match an
+ * `@` that's part of something else (e.g. `theme=@notatheme`).
+ * Deliberately not anchored to the start: options come *before* the
+ * mention, so `parseOptions()`'s own "font= reads to the end" behavior
+ * only ever sees the (bounded) options substring, never the mention or
+ * message text that follows it.
+ */
+const MENTION_RE = /(?<=^|\s)@([a-zA-Z0-9_]+)(?:@([a-zA-Z0-9.-]+))?(?=\s|$)/;
+
+export interface ParsedFakequoteArgs {
+  username: string;
+  host: string | null;
+  optionsText: string;
+  messageText: string;
+}
+
+/** Pure parsing half of `fakequote <options> @user message text` — `null` when the args don't contain a usable `@user` target followed by a message. */
+export function parseFakequoteArgs(args: string): ParsedFakequoteArgs | null {
+  const trimmed = args.trim();
+  const match = MENTION_RE.exec(trimmed);
+  if (!match) return null;
+
+  const messageText = trimmed.slice(match.index + match[0].length).trim();
+  if (!messageText) return null;
+
+  const [, username, host] = match as unknown as [
+    string,
+    string,
+    string | undefined,
+  ];
+  return {
+    username,
+    host: host ?? null,
+    optionsText: trimmed.slice(0, match.index).trim(),
+    messageText,
+  };
+}
 
 export type FakequoteResult =
   | { kind: "error"; text: string }
@@ -73,25 +110,13 @@ export async function runFakequoteCommand(params: {
     hostId: callerHostId,
   });
 
-  const match = FAKEQUOTE_RE.exec(params.args.trim());
-  if (!match) {
+  const parsed = parseFakequoteArgs(params.args);
+  if (!parsed) {
     return { kind: "error", text: t(STRINGS.usage, locale) };
   }
-  const [, username, host, rest] = match as unknown as [
-    string,
-    string,
-    string | undefined,
-    string,
-  ];
+  const { username, host, optionsText, messageText } = parsed;
 
-  const separatorIndex = rest.search(/\s--\s/);
-  const messageText = (
-    separatorIndex === -1 ? rest : rest.slice(0, separatorIndex)
-  ).trim();
-  const optionsText =
-    separatorIndex === -1 ? "" : rest.slice(separatorIndex + 4).trim();
-
-  const author = await showUser({ username, host: host ?? null });
+  const author = await showUser({ username, host });
   if (!author) {
     return {
       kind: "error",

@@ -17,8 +17,8 @@ const STRINGS = {
   // like `@user` from being parsed as a real mention token once this posts
   // as an actual note (mfm-js doesn't extract mentions out of inline code).
   commands: {
-    en: "`settings view|set …|reset` — your own defaults\n`host-settings view|set …|reset` — this instance's defaults (bot admins only)\n`fakequote @user: message -- options` — make up a quote in someone's name\n`admin view|set …|reset` — bot-wide defaults (bot admins only)",
-    ja: "`settings view|set …|reset` — あなたのデフォルト設定\n`host-settings view|set …|reset` — このインスタンスのデフォルト設定 (Bot管理者のみ)\n`fakequote @user: message -- options` — 誰かの名前で架空の引用を作る\n`admin view|set …|reset` — Bot全体のデフォルト設定 (Bot管理者のみ)",
+    en: "`settings view|set …|reset` — your own defaults\n`host-settings view|set …|reset` — this instance's defaults (bot admins only)\n`fakequote <options> @user message` — make up a quote in someone's name\n`admin view|set …|reset` — bot-wide defaults (bot admins only)",
+    ja: "`settings view|set …|reset` — あなたのデフォルト設定\n`host-settings view|set …|reset` — このインスタンスのデフォルト設定 (Bot管理者のみ)\n`fakequote <options> @user message` — 誰かの名前で架空の引用を作る\n`admin view|set …|reset` — Bot全体のデフォルト設定 (Bot管理者のみ)",
   },
   optionsTitle: { en: "⚙️ Mention options", ja: "⚙️ メンションのオプション" },
   // {{bot}} is the bot's own real, working mention (e.g. "@miq") —
@@ -51,8 +51,8 @@ const STRINGS = {
   },
   fakequoteTitle: { en: "🎭 fakequote", ja: "🎭 fakequote" },
   fakequote: {
-    en: "`fakequote @user: message -- options` makes up a quote in someone else's name. Don't want it used on you? Block it with `settings set block-fakequote`.",
-    ja: "`fakequote @user: message -- options` は指定したユーザーの名前で引用文をでっち上げます。使われたくない場合は `settings set block-fakequote` でブロックできます。",
+    en: "`fakequote <options> @user message` makes up a quote in someone else's name — options (`color`, `font=pop`, …) come before the @mention. Don't want it used on you? Block it with `settings set block-fakequote`.",
+    ja: "`fakequote <options> @user message` は指定したユーザーの名前で引用文をでっち上げます。オプション(`color`、`font=pop` など)は@メンションより前に置きます。使われたくない場合は `settings set block-fakequote` でブロックできます。",
   },
 } satisfies Record<string, Translations>;
 
