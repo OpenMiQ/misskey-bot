@@ -3,8 +3,8 @@ import { t, type Translations } from "../i18n/index.js";
 const STRINGS = {
   title: { en: "🙏 Credits", ja: "🙏 クレジット" },
   project: {
-    en: "https://github.com/otnc\n\nBy **otoneko.**\nOpenMiQ-Misskey — https://github.com/otnc/OpenMiQ-Misskey",
-    ja: "https://github.com/otnc\n\n作者: **otoneko.**\nOpenMiQ-Misskey — https://github.com/otnc/OpenMiQ-Misskey",
+    en: "https://github.com/otnc\n\nBy **otoneko.**\nOpenMiQ-Misskey — https://github.com/OpenMiQ/misskey-bot",
+    ja: "https://github.com/otnc\n\n作者: **otoneko.**\nOpenMiQ-Misskey — https://github.com/OpenMiQ/misskey-bot",
   },
   basedOnTitle: { en: "Based on", ja: "ベース" },
   // Required by OpenMiQ's ADDITIONAL_TERMS.md (AGPL-3.0 Section 7):
@@ -12,13 +12,13 @@ const STRINGS = {
   // "based on OpenMiQ, with modifications" statement, wherever this bot's
   // own credits/help/about-equivalent is shown.
   basedOn: {
-    en: "This bot is based on **OpenMiQ** (https://github.com/otnc/OpenMiQ) by **otoneko.**, with modifications for Misskey.",
-    ja: "このBotは **otoneko.** 氏による **OpenMiQ** (https://github.com/otnc/OpenMiQ) をベースに、Misskey向けに改変したものです。",
+    en: "This bot is based on **OpenMiQ** (https://github.com/OpenMiQ/discord-bot) by **otoneko.**, with modifications for Misskey.",
+    ja: "このBotは **otoneko.** 氏による **OpenMiQ** (https://github.com/OpenMiQ/discord-bot) をベースに、Misskey向けに改変したものです。",
   },
   libraryTitle: { en: "makeitaquote", ja: "makeitaquote" },
   library: {
-    en: "The library this bot renders images with.\nhttps://github.com/otnc/makeitaquote\nhttps://www.npmjs.com/package/makeitaquote",
-    ja: "このBotが画像描画に使用しているライブラリです。\nhttps://github.com/otnc/makeitaquote\nhttps://www.npmjs.com/package/makeitaquote",
+    en: "The library this bot renders images with.\nhttps://github.com/OpenMiQ/makeitaquote\nhttps://www.npmjs.com/package/makeitaquote",
+    ja: "このBotが画像描画に使用しているライブラリです。\nhttps://github.com/OpenMiQ/makeitaquote\nhttps://www.npmjs.com/package/makeitaquote",
   },
   inspirationTitle: { en: "Inspired by", ja: "インスピレーション元" },
   inspiration: {

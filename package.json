@@ -1,11 +1,11 @@
 {
-  "name": "openmiq-misskey",
+  "name": "@openmiq/misskey-bot",
   "version": "1.0.0",
   "description": "Open Source Misskey MiQ Bot (for self-host) — a Misskey port of OpenMiQ",
   "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/otnc/OpenMiQ-Misskey.git"
+    "url": "git+https://github.com/OpenMiQ/misskey-bot.git"
   },
   "keywords": [
     "misskey",
@@ -16,7 +16,7 @@
   "license": "AGPL-3.0-or-later",
   "type": "module",
   "packageManager": "pnpm@10.34.5",
-  "homepage": "https://github.com/otnc/OpenMiQ-Misskey#readme",
+  "homepage": "https://github.com/OpenMiQ/misskey-bot#readme",
   "scripts": {
     "test": "vitest run",
     "setup": "miq install all",
