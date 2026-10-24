@@ -3,8 +3,8 @@ import { t, type Translations } from "../i18n/index.js";
 const STRINGS = {
   title: { en: "🙏 Credits", ja: "🙏 クレジット" },
   project: {
-    en: "https://github.com/otnc\n\nBy **otoneko.**\nOpenMiQ-Misskey — https://github.com/OpenMiQ/misskey-bot",
-    ja: "https://github.com/otnc\n\n作者: **otoneko.**\nOpenMiQ-Misskey — https://github.com/OpenMiQ/misskey-bot",
+    en: "https://github.com/otnc\n\nBy **otoneko.**\nOpenMiQ Misskey — https://github.com/OpenMiQ/misskey-bot",
+    ja: "https://github.com/otnc\n\n作者: **otoneko.**\nOpenMiQ Misskey — https://github.com/OpenMiQ/misskey-bot",
   },
   basedOnTitle: { en: "Based on", ja: "ベース" },
   // Required by OpenMiQ's ADDITIONAL_TERMS.md (AGPL-3.0 Section 7):
