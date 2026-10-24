@@ -8,13 +8,13 @@
 
 </div>
 
-[![CI](https://img.shields.io/github/actions/workflow/status/otnc/OpenMiQ-Misskey/ci.yml?branch=main&label=ci)](https://github.com/otnc/OpenMiQ-Misskey/actions/workflows/ci.yml) [![License](https://img.shields.io/badge/license-AGPL--3.0--or--later-blue)](./LICENSE) [![Additional Terms](https://img.shields.io/badge/additional%20terms-important)](./ADDITIONAL_TERMS.md) [![Node](https://img.shields.io/badge/node-%3E%3D24-339933?logo=node.js&logoColor=white)](https://nodejs.org)
+[![CI](https://img.shields.io/github/actions/workflow/status/OpenMiQ/misskey-bot/ci.yml?branch=main&label=ci)](https://github.com/OpenMiQ/misskey-bot/actions/workflows/ci.yml) [![License](https://img.shields.io/badge/license-AGPL--3.0--or--later-blue)](./LICENSE) [![Additional Terms](https://img.shields.io/badge/additional%20terms-important)](./ADDITIONAL_TERMS.md) [![Node](https://img.shields.io/badge/node-%3E%3D24-339933?logo=node.js&logoColor=white)](https://nodejs.org)
 
 _[English](./README.md)_
 
-ノートを引用画像に変換する、セルフホスト用の **Misskey** Bot。 [OpenMiQ](https://github.com/otnc/OpenMiQ)(Discord Bot)をベースに、Misskey向けに改変したものです — [クレジット](#クレジット) 参照。
+ノートを引用画像に変換する、セルフホスト用の **Misskey** Bot。 [OpenMiQ](https://github.com/OpenMiQ/discord-bot)(Discord Bot)をベースに、Misskey向けに改変したものです — [クレジット](#クレジット) 参照。
 
-ノートにリプライした状態でBotをメンションすると、そのノートを [makeitaquote](https://github.com/otnc/makeitaquote)(Misskeyに標準対応) で引用画像にして画像リプライします。
+ノートにリプライした状態でBotをメンションすると、そのノートを [makeitaquote](https://github.com/OpenMiQ/makeitaquote)(Misskeyに標準対応) で引用画像にして画像リプライします。
 
 ## Discord版との違い
 
@@ -158,8 +158,8 @@ otoneko. https://github.com/otnc
 
 ## クレジット
 
-- **OpenMiQ** — https://github.com/otnc/OpenMiQ — このBotは **otoneko.** 氏によるOpenMiQ(Discord Bot)をベースに、Misskey向けに改変したものです。
-- **makeitaquote** — https://github.com/otnc/makeitaquote — このBotが画像描画に使用しているライブラリです。Misskeyへの標準対応を含みます。
+- **OpenMiQ** — https://github.com/OpenMiQ/discord-bot — このBotは **otoneko.** 氏によるOpenMiQ(Discord Bot)をベースに、Misskey向けに改変したものです。
+- **makeitaquote** — https://github.com/OpenMiQ/makeitaquote — このBotが画像描画に使用しているライブラリです。Misskeyへの標準対応を含みます。
 - Make it a Quote (Twitter) — https://twitter.com/MakeItAQuote
 - Make it a Quote (Discord/Misskey/Bluesky) — https://miq.moe/
 
@@ -168,4 +168,4 @@ otoneko. https://github.com/otnc
 このプロジェクトは [GNU Affero General Public License v3.0 or later](./LICENSE) の下でライセンスされており、OpenMiQ自体がライセンスされている [追加条項](./ADDITIONAL_TERMS.md)(AGPL-3.0 第7条)を、本Botがその改変版であるため、そのまま(未改変で)引き継いでいます。
 
 - **SPDX:** `AGPL-3.0-or-later` (AGPL-3.0 第7条に基づく追加条項あり)
-- この _Bot_ の改変版を配布または運用する場合、同じ追加条項により、改変後のソースコードをAGPL-3.0の下で公開し、OpenMiQへの帰属表示 (元リポジトリURL: https://github.com/otnc/OpenMiQ)を [ADDITIONAL_TERMS.md](./ADDITIONAL_TERMS.md) の定めに従って表示する必要があります。
+- この _Bot_ の改変版を配布または運用する場合、同じ追加条項により、改変後のソースコードをAGPL-3.0の下で公開し、OpenMiQへの帰属表示 (元リポジトリURL: https://github.com/OpenMiQ/discord-bot)を [ADDITIONAL_TERMS.md](./ADDITIONAL_TERMS.md) の定めに従って表示する必要があります。
