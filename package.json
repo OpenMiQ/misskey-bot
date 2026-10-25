@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "makeitaquote": "^12.1.5",
-    "misskey-js": "2026.5.4",
+    "misskey-js": "2026.10.1",
     "mustache": "^4.2.0",
     "pngjs": "^7.0.0",
     "pureimage": "^0.4.20",
